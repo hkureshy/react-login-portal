@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export class HomePage extends Component {
+import { userActions } from '../actions';
+
+class Home extends Component {
 
     render() {
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2 align="center">Welcome! You have successfully logged in.</h2>
                 <p align="center">
-                // Add a redirection for logout
+                    <Link to="/login" className="btn btn-link btn-lg" onClick={this.props.logout} >Logout</Link>
                 </p>
             </div>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        logout: bindActionCreators(userActions.logout, dispatch)
+    }
+}
+
+const HomePage = withRouter(connect(null, mapDispatchToProps)(Home));
+export { HomePage };
