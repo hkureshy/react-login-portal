@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { PrivateRoute } from './PrivateRoute.js';
+import { PrivateRoute } from './PrivateRoute';
 import { HomePage } from './components/HomePage';
 import { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
@@ -41,7 +41,7 @@ class AppComponent extends React.Component {
 function mapStateToProps(state) {
     const { alert } = state;
     return {
-        alert,
+        alert: alert || {},
         loggedIn: state.authentication.loggedIn,
         registered: state.registration.registered
     };

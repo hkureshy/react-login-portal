@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -55,7 +55,7 @@ class Register extends Component {
                     </div>
                     <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" onChange={this.handleChange} />
+                        <input type="password" className="form-control password" name="password" onChange={this.handleChange} />
                         {submitted && !user.password &&
                             <div className="help-block">Password is required</div>
                         }
@@ -74,7 +74,7 @@ class Register extends Component {
 
 function mapStateToProps(state) {
     return {
-        registering: state.registration.registering
+        registering: state.registration ? state.registration.registering : false
     }
 }
 
@@ -84,7 +84,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-const RegisterPage = withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));
+const RegisterPage = connect(mapStateToProps, mapDispatchToProps)(Register);
 
 export { RegisterPage };
 export { RegisterPage as TestRegisterPage };

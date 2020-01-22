@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
@@ -21,9 +20,9 @@ class Home extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        logout: bindActionCreators(userActions.logout, dispatch)
+        logout: () => dispatch(userActions.logout())
     }
 }
 
-const HomePage = withRouter(connect(null, mapDispatchToProps)(Home));
+const HomePage = connect(null, mapDispatchToProps)(Home);
 export { HomePage };

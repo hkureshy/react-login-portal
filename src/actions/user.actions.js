@@ -16,7 +16,6 @@ function login(username, password) {
         return new Promise((resolve, reject) => {
             userService.login(username, password)
                 .then(() => {
-                    localStorage.setItem("user", JSON.stringify({username}));
                     resolve(dispatch(success(username)));
                 })
                 .catch(err => {
@@ -32,10 +31,8 @@ function login(username, password) {
 }
 
 function logout() {
-    return (dispatch) => {
-        userService.logout();
-        dispatch({ type: userConstants.LOGOUT });
-    }
+    userService.logout();
+    return { type: userConstants.LOGOUT };
 }
 
 function register(user) {
@@ -44,7 +41,7 @@ function register(user) {
         dispatch(alertActions.clear());
         return new Promise((resolve, reject) => {
             userService.register(user)
-                .then(() => {
+                .then((res) => {
                     dispatch(alertActions.success("Registration successful"));
                     resolve(dispatch(success(user)));
                 })
