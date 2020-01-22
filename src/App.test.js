@@ -17,31 +17,24 @@ import { Router, Route } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute.js';
 
 configure({ adapter: new Adapter() });
-const middlewares = []
-const mockStore = configureStore(middlewares)
-let mockedStore = mockStore({})
 
 export const CustomProvider = ({ children }) => {
   return (
-    <MemoryRouter>
-      <App dispatch={spy()}/>
-    </MemoryRouter>
+    <Provider store={store}>
+        {children}
+    </Provider>
   );
 };
 
 describe("Test AppComponent", () => {
   it('check route, dispatch and store setup for component', () => {
     // test will not compile if component is not correctly setup
-    const wrapper = mount(<CustomProvider />, {
-      context: {store},
-      childContextTypes: {store: PropTypes.object.isRequired}});
+    const wrapper = mount(<CustomProvider><App /></CustomProvider>);
     expect(true).toBeTruthy();
   });
 
   it('check for redirections', () => {
-    const wrapper = mount(<CustomProvider />, {
-      context: {store},
-      childContextTypes: {store: PropTypes.object.isRequired}});
+    const wrapper = mount(<CustomProvider><App /></CustomProvider>);
     let a = wrapper.find(PrivateRoute);
     let b = wrapper.find(Route);
     expect(a.length).toEqual(1);
